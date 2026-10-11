@@ -1,0 +1,147 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta
+        name="description"
+        content="Organize, manage, and track your tasks with a simple Kanban board."
+    >
+
+    <title>Kanban Board | Task Manager</title>
+
+    <link rel="stylesheet" href="style.css">
+
+    <script src="index.js" defer></script>
+</head>
+
+<body>
+    <main class="app">
+        <!-- Application Header -->
+        <header>
+            <nav aria-label="Main navigation">
+                <div class="left">
+                    <h1>Kanban</h1>
+                </div>
+
+                <div class="right">
+                    <button
+                        type="button"
+                        id="toggle-modal"
+                        aria-haspopup="dialog"
+                        aria-controls="task-modal"
+                    >
+                        + Add New Task
+                    </button>
+                </div>
+            </nav>
+        </header>
+
+        <!-- Kanban Board -->
+        <section
+            class="board"
+            aria-label="Task board"
+        >
+            <!-- To-Do Column -->
+            <section
+                id="todo"
+                class="task-column"
+                aria-labelledby="todo-heading"
+            >
+                <div class="heading">
+                    <h2 class="left" id="todo-heading">
+                        To-Do
+                    </h2>
+
+                    <span class="right" aria-label="Task count">
+                        0
+                    </span>
+                </div>
+            </section>
+
+            <!-- In-Progress Column -->
+            <section
+                id="progress"
+                class="task-column"
+                aria-labelledby="progress-heading"
+            >
+                <div class="heading">
+                    <h2 class="left" id="progress-heading">
+                        In Progress
+                    </h2>
+
+                    <span class="right" aria-label="Task count">
+                        0
+                    </span>
+                </div>
+            </section>
+
+            <!-- Done Column -->
+            <section
+                id="done"
+                class="task-column"
+                aria-labelledby="done-heading"
+            >
+                <div class="heading">
+                    <h2 class="left" id="done-heading">
+                        Done
+                    </h2>
+
+                    <span class="right" aria-label="Task count">
+                        0
+                    </span>
+                </div>
+            </section>
+        </section>
+    </main>
+
+    <!-- Add Task Modal -->
+    <div
+        class="modal add-new-task"
+        id="task-modal"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="modal-title"
+        aria-hidden="true"
+    >
+        <div class="bg"></div>
+
+        <div class="center">
+            <h2 id="modal-title">Create a New Task</h2>
+
+            <label for="task-title-input">
+                Task Title
+            </label>
+
+            <input
+                type="text"
+                id="task-title-input"
+                placeholder="Enter task title"
+                maxlength="120"
+                required
+            >
+
+            <label for="task-desc-input">
+                Task Description
+            </label>
+
+            <textarea
+                id="task-desc-input"
+                placeholder="Describe your task (optional)"
+                rows="4"
+                maxlength="2000"
+            ></textarea>
+
+            <button
+                type="button"
+                id="add-new-task"
+                class="add-task-btn"
+            >
+                Add Task
+            </button>
+        </div>
+    </div>
+</body>
+</html>

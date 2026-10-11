@@ -1,0 +1,511 @@
+
+/* ========================================
+   1. RESET & DESIGN TOKENS
+======================================== */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    color-scheme: dark;
+
+    /* Colors */
+    --bg-color: #111214;
+    --surface-color: #191a1e;
+    --bg-task-color: #24262b;
+    --bg-button-color: #292b31;
+    --primary-text-color: #f4f4f5;
+    --secondary-text-color: #a1a1aa;
+    --border-color: #34363d;
+    --accent-color: #818cf8;
+    --accent-hover: #6366f1;
+    --delete-color: #ef4444;
+    --delete-hover: #dc2626;
+    --success-color: #22c55e;
+
+    /* Spacing */
+    --padding-xs: 4px;
+    --padding-s: 8px;
+    --padding-m: 12px;
+    --padding-l: 16px;
+    --padding-xl: 24px;
+    --padding-xxl: 32px;
+
+    /* Radius */
+    --border-radius-s: 6px;
+    --border-radius-m: 10px;
+    --border-radius-l: 14px;
+    --border-radius-xl: 18px;
+
+    /* Effects */
+    --shadow-card: 0 4px 14px rgb(0 0 0 / 15%);
+    --transition: 180ms ease;
+}
+
+html {
+    min-height: 100%;
+    font-family: Inter, "Segoe UI", Arial, sans-serif;
+    background-color: var(--bg-color);
+    scroll-behavior: smooth;
+}
+
+body {
+    min-height: 100vh;
+    color: var(--primary-text-color);
+    background-color: var(--bg-color);
+    line-height: 1.5;
+}
+
+button,
+input,
+textarea {
+    font: inherit;
+}
+
+button {
+    -webkit-tap-highlight-color: transparent;
+}
+
+button:focus-visible,
+input:focus-visible,
+textarea:focus-visible {
+    outline: 2px solid var(--accent-color);
+    outline-offset: 3px;
+}
+
+
+/* ========================================
+   2. MAIN LAYOUT
+======================================== */
+
+main.app,
+main {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+
+/* ========================================
+   3. NAVIGATION
+======================================== */
+
+header {
+    border-bottom: 1px solid var(--border-color);
+    background-color: var(--surface-color);
+}
+
+nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--padding-l);
+
+    padding: var(--padding-l) var(--padding-xxl);
+}
+
+nav .left h1 {
+    font-size: 1.5rem;
+    font-weight: 750;
+    letter-spacing: -0.8px;
+}
+
+nav button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--padding-s);
+
+    padding: 10px 16px;
+    border: 1px solid transparent;
+    border-radius: var(--border-radius-m);
+
+    background-color: var(--accent-color);
+    color: #ffffff;
+
+    font-weight: 600;
+    cursor: pointer;
+
+    transition:
+        background-color var(--transition),
+        transform var(--transition);
+}
+
+nav button:hover {
+    background-color: var(--accent-hover);
+}
+
+nav button:active {
+    transform: scale(0.97);
+}
+
+
+/* ========================================
+   4. KANBAN BOARD
+======================================== */
+
+.board {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    align-items: start;
+    gap: var(--padding-xl);
+
+    flex: 1;
+    padding: var(--padding-xxl);
+}
+
+.task-column {
+    min-width: 0;
+    min-height: 240px;
+    height: 100%;
+
+    display: flex;
+    flex-direction: column;
+    gap: var(--padding-m);
+
+    padding: var(--padding-l);
+
+    background-color: var(--surface-color);
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius-l);
+
+    transition:
+        border-color var(--transition),
+        background-color var(--transition),
+        transform var(--transition);
+}
+
+.task-column.hover-over {
+    border: 2px dashed var(--accent-color);
+    background-color: #20212a;
+    transform: translateY(-2px);
+}
+
+
+/* ========================================
+   5. COLUMN HEADINGS
+======================================== */
+
+.task-column .heading {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--padding-s);
+
+    padding-bottom: var(--padding-m);
+    border-bottom: 1px solid var(--border-color);
+}
+
+.task-column .heading h2 {
+    font-size: 0.95rem;
+    font-weight: 650;
+    letter-spacing: 0.1px;
+}
+
+.task-column .heading .right {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    min-width: 28px;
+    min-height: 28px;
+    padding: 2px 8px;
+
+    border-radius: 999px;
+    background-color: var(--bg-button-color);
+    color: var(--secondary-text-color);
+
+    font-size: 0.8rem;
+    font-weight: 600;
+}
+
+
+/* ========================================
+   6. TASK CARDS
+======================================== */
+
+.task-column .task {
+    display: flex;
+    flex-direction: column;
+    gap: var(--padding-s);
+
+    min-width: 0;
+    padding: var(--padding-l);
+
+    background-color: var(--bg-task-color);
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius-m);
+
+    box-shadow: var(--shadow-card);
+
+    cursor: grab;
+    overflow-wrap: anywhere;
+
+    transition:
+        border-color var(--transition),
+        transform var(--transition),
+        opacity var(--transition);
+}
+
+.task-column .task:hover {
+    border-color: #52545e;
+    transform: translateY(-2px);
+}
+
+.task-column .task:active {
+    cursor: grabbing;
+}
+
+.task-column .task.dragging {
+    opacity: 0.45;
+    transform: scale(0.98);
+}
+
+.task-column .task h2 {
+    font-size: 0.95rem;
+    font-weight: 650;
+    line-height: 1.4;
+}
+
+.task-column .task p {
+    color: var(--secondary-text-color);
+    font-size: 0.875rem;
+    line-height: 1.6;
+    white-space: pre-wrap;
+}
+
+
+/* ========================================
+   7. DELETE BUTTON
+======================================== */
+
+.task-column .task button {
+    align-self: flex-end;
+
+    margin-top: var(--padding-s);
+    padding: 6px 11px;
+
+    border: 1px solid transparent;
+    border-radius: var(--border-radius-s);
+
+    background-color: rgb(239 68 68 / 12%);
+    color: #f87171;
+
+    font-size: 0.8rem;
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition:
+        background-color var(--transition),
+        color var(--transition);
+}
+
+.task-column .task button:hover {
+    background-color: var(--delete-color);
+    color: #ffffff;
+}
+
+
+/* ========================================
+   8. ADD TASK MODAL
+======================================== */
+
+.modal {
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+
+    display: none;
+    align-items: center;
+    justify-content: center;
+
+    padding: var(--padding-l);
+}
+
+.modal.active {
+    display: flex;
+}
+
+.modal .bg {
+    position: absolute;
+    inset: 0;
+
+    background-color: rgb(0 0 0 / 65%);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+}
+
+.modal .center {
+    position: relative;
+    z-index: 1;
+
+    width: 100%;
+    max-width: 460px;
+    max-height: calc(100vh - 32px);
+    overflow-y: auto;
+
+    display: flex;
+    flex-direction: column;
+    gap: var(--padding-m);
+
+    padding: var(--padding-xxl);
+
+    background-color: var(--surface-color);
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius-xl);
+
+    box-shadow: 0 20px 60px rgb(0 0 0 / 35%);
+
+    animation: modal-enter 180ms ease-out;
+}
+
+.modal .center h2 {
+    margin-bottom: var(--padding-s);
+    font-size: 1.3rem;
+    font-weight: 700;
+}
+
+.modal .center label {
+    color: var(--secondary-text-color);
+    font-size: 0.875rem;
+    font-weight: 600;
+}
+
+.modal .center input,
+.modal .center textarea,
+.modal .center select {
+    width: 100%;
+    padding: var(--padding-m);
+
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius-m);
+
+    background-color: var(--bg-task-color);
+    color: var(--primary-text-color);
+
+    font-size: 0.925rem;
+
+    transition: border-color var(--transition);
+}
+
+.modal .center input::placeholder,
+.modal .center textarea::placeholder {
+    color: #777985;
+}
+
+.modal .center input:focus,
+.modal .center textarea:focus {
+    border-color: var(--accent-color);
+    outline: none;
+}
+
+.modal .center textarea {
+    min-height: 110px;
+    resize: vertical;
+}
+
+.modal .center .add-task-btn {
+    align-self: flex-end;
+
+    margin-top: var(--padding-s);
+    padding: 10px 18px;
+
+    border: none;
+    border-radius: var(--border-radius-m);
+
+    background-color: var(--accent-color);
+    color: #ffffff;
+
+    font-weight: 650;
+    cursor: pointer;
+
+    transition:
+        background-color var(--transition),
+        transform var(--transition);
+}
+
+.modal .center .add-task-btn:hover {
+    background-color: var(--accent-hover);
+}
+
+.modal .center .add-task-btn:active {
+    transform: scale(0.97);
+}
+
+@keyframes modal-enter {
+    from {
+        opacity: 0;
+        transform: translateY(8px) scale(0.98);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+
+/* ========================================
+   9. RESPONSIVE DESIGN
+======================================== */
+
+@media (max-width: 900px) {
+    .board {
+        gap: var(--padding-m);
+        padding: var(--padding-l);
+    }
+
+    .task-column {
+        padding: var(--padding-m);
+    }
+
+    nav {
+        padding: var(--padding-l);
+    }
+}
+
+@media (max-width: 650px) {
+    nav .left h1 {
+        font-size: 1.25rem;
+    }
+
+    nav button {
+        padding: 9px 12px;
+        font-size: 0.85rem;
+    }
+
+    .board {
+        grid-template-columns: 1fr;
+        align-content: start;
+        gap: var(--padding-l);
+    }
+
+    .task-column {
+        min-height: 180px;
+        height: auto;
+    }
+
+    .modal .center {
+        padding: var(--padding-xl);
+    }
+}
+
+
+/* ========================================
+   10. REDUCED MOTION ACCESSIBILITY
+======================================== */
+
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        scroll-behavior: auto !important;
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}
